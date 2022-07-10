@@ -19,8 +19,11 @@ def get_book(id_book:int):
     
 @app.post('/createbook')
 def create_book(book:Book):
-    result_create_book = BookDAO.create(book)
-    return result_create_book
+    try:
+        result_create_book = BookDAO.create(book)
+        return result_create_book
+    except:
+        return {"error":'error'}
 
     
 
