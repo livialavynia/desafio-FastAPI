@@ -17,6 +17,6 @@ def get_book(id_book:int):
     except:
         return {"error":'error'}
     
-
+@app.put('/createbook')
 
 
