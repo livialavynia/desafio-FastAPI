@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-
 from dao import BookDAO
+from schemas import Book
 
 app = FastAPI()
 
@@ -17,7 +17,11 @@ def get_book(id_book:int):
     except:
         return {"error":'error'}
     
-    
+@app.post('/createbook')
+def create_book(book:Book):
+    result_create_book = BookDAO.create(book)
+    return result_create_book
+
     
 
 
