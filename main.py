@@ -44,7 +44,17 @@ def list_all_books():
         return books
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+
+@app.put('/updatebook',status_code=status.HTTP_200_OK)
+def update_book(id_book:int,name:str,isbn:str,quantity:int):
+    try:
+        book_exist = BookDAO.get(id_book)
+        if(book_exist):
+            book = BookDAO.update(id_book,name,isbn,quantity)
+    except:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+
+
          
     
 
