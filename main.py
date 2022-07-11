@@ -49,8 +49,10 @@ def list_all_books():
 def update_book(id_book:int,name:str,isbn:str,quantity:int):
     try:
         book_exist = BookDAO.get(id_book)
-        if(book_exist):
-            book = BookDAO.update(id_book,name,isbn,quantity)
+        if(book_exist): 
+            BookDAO.update(id_book,name,isbn,quantity)
+            book_updated = BookDAO.get(id_book)
+            return {"Book before": book_exist,"Book now":book_updated}
     except:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
