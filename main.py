@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, status, Response
 from dao import BookDAO
 from schemas import Book
 
@@ -9,21 +9,22 @@ def home():
     return ('Home')
 
     
-@app.get('/getbook/{id_book}')
-def get_book(id_book:int):
+@app.get('/getbook', status_code=status.HTTP_200_OK)
+def get_book(id_book:int, response: Response):
     try:
         item = BookDAO.get(id_book)
         return {"Book": item}
     except:
-        return {"error":'error'}
+        response.status_code = status.HTTP_404_NOT_FOUND
     
-@app.post('/createbook')
-def create_book(book:Book):
+@app.post('/createbook',status_code=status.HTTP_201_CREATED)
+def create_book(book:Book, response: Response):
     try:
-        result_create_book = BookDAO.create(book)
-        return result_create_book
-    except:
-        return {"error":'error'}
+        BookDAO.create(book)
+        return book
+    except Exception as error:
+        response.status_code = status.HTTP_409_CONFLICT
+        
 
     
 
