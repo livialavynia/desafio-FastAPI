@@ -15,7 +15,7 @@ def get_book(id_book:int):
         item = BookDAO.get(id_book)
         return {"Book": item}
     except Exception as error:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=error.args)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error.args)
     
 @app.post('/createbook',status_code=status.HTTP_201_CREATED)
 def create_book(book:Book):
@@ -24,8 +24,27 @@ def create_book(book:Book):
         return book
     except Exception as error:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=error.args)
-        
 
+@app.delete('/deletebook',status_code=status.HTTP_200_OK)
+def delete_book(id_book:int):
+    try:
+        book_exist = BookDAO.get(id_book)
+        if(book_exist):
+            BookDAO.delete(id_book)
+            return{'The book is deleted'}
+        raise Exception('Book not found')
+    except:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+
+@app.get('/listallbooks',status_code=status.HTTP_200_OK)
+def list_all_books():
+    try:
+        books = BookDAO.list()
+        return books
+    except:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+         
+    
 
     
 
