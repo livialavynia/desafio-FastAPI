@@ -1,4 +1,3 @@
-from typing import Optional
 from fastapi import FastAPI, HTTPException, status
 from dao import BookDAO
 from schemas import Book
@@ -56,9 +55,6 @@ def update_book(id_book:int,name:str,isbn:str,quantity:int):
     except:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
-
-         
-    
 
     
 
