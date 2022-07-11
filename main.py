@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import FastAPI, HTTPException, status
 from dao import BookDAO
 from schemas import Book
@@ -31,7 +32,7 @@ def delete_book(id_book:int):
         book_exist = BookDAO.get(id_book)
         if(book_exist):
             BookDAO.delete(id_book)
-            return{'The book is deleted'}
+            return {"message": "The book is deleted"}
         raise Exception('Book not found')
     except:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
@@ -43,6 +44,7 @@ def list_all_books():
         return books
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
          
     
 
