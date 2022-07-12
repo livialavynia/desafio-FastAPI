@@ -41,8 +41,9 @@ class BookDAO:
 
         for b in books:
             if b["id"] == book_id:
+                if(b["quantity"] <= 1):
+                    raise Exception('Out of stock')
                 return b
-
         raise Exception("book not found")
 
     @staticmethod
@@ -74,3 +75,4 @@ class BookDAO:
                 break
 
         BookDAO._save_books(books)
+                
